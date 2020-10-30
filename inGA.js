@@ -104,10 +104,10 @@ function doFlow(){
             //handling of eTxt
             try{
                 if('gtm.element' in dataLayer[i]){
-                    if('text' in dataLayer[i]['gtm.element']){
-                        elementText=dataLayer[i]['gtm.element']["text"].replace('↵',' ');
+                    if('innerText' in dataLayer[i]['gtm.element']){
+                        elementText=dataLayer[i]['gtm.element']["innerText"];
                     }else if('textContent' in dataLayer[i]['gtm.element']){
-                        elementText=dataLayer[i]['gtm.element']["textContent"].replace('↵',' ');
+                        elementText=dataLayer[i]['gtm.element']["textContent"];
                     }
                 }
             }catch(e){
