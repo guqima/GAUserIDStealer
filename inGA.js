@@ -105,9 +105,9 @@ function doFlow(){
             try{
                 if('gtm.element' in dataLayer[i]){
                     if('innerText' in dataLayer[i]['gtm.element']){
-                        elementText=dataLayer[i]['gtm.element']["innerText"];
+                        elementText=dataLayer[i]['gtm.element']["innerText"].replaceAll('\n',' ');
                     }else if('textContent' in dataLayer[i]['gtm.element']){
-                        elementText=dataLayer[i]['gtm.element']["textContent"];
+                        elementText=dataLayer[i]['gtm.element']["textContent"].replaceAll('\n',' ');
                     }
                 }
             }catch(e){
