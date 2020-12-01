@@ -30,7 +30,7 @@ function removeScript(){
     for(i=0;i<ss.length;i++){
         if(ss[i].innerHTML.indexOf("function getgaCid()")!==-1){
             ss[i].parentNode.removeChild(ss[i]);
-            console.log("Remove script done ver4");
+            //console.log("Remove script done ver4");
             break;
         }
     }
@@ -47,9 +47,9 @@ function doFlow(){
     var cframe=document.getElementById(guhappyId);
     cframe.addEventListener("load",function(){
         setTimeout(function(){
-            console.log("removing guhappy - "+guhappyId);
+            //console.log("removing guhappy - "+guhappyId);
             cframe.parentNode.removeChild(cframe);
-            console.log("remove guhappy - "+guhappyId+" done");
+            //console.log("remove guhappy - "+guhappyId+" done");
         }, 5000);
         
     });
