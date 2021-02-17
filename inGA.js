@@ -70,6 +70,7 @@ function doFlow(){
     elementClasses=""
     elementId=""
     elementText=""
+    tmp_text=""
     dataanalyticsID="null"
 
     for(i=dataLayer.length-1;i>=0;i--){
@@ -105,7 +106,7 @@ function doFlow(){
             try{
                 if('gtm.element' in dataLayer[i]){
                     if('innerText' in dataLayer[i]['gtm.element']){
-                        elementText=dataLayer[i]['gtm.element']["innerText"].replaceAll('\n',' ');
+                        tmp_text=dataLayer[i]['gtm.element']["innerText"].replaceAll('\n',' ');
                         var re=RegExp('\\d\\d\\d\\d/\\d\\d\\/\\d\\d','g');
                         tmp_text=tmp_text.replace(re,"-DATE-");    
                         var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g'); 
@@ -124,7 +125,7 @@ function doFlow(){
                         }
                         elementText=tmp_text;
                     }else if('textContent' in dataLayer[i]['gtm.element']){
-                        elementText=dataLayer[i]['gtm.element']["textContent"].replaceAll('\n',' ');
+                        tmp_text=dataLayer[i]['gtm.element']["textContent"].replaceAll('\n',' ');
                         var re=RegExp('\\d\\d\\d\\d/\\d\\d\\/\\d\\d','g');
                         tmp_text=tmp_text.replace(re,"-DATE-");    
                         var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g'); 
