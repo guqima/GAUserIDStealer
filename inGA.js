@@ -106,8 +106,42 @@ function doFlow(){
                 if('gtm.element' in dataLayer[i]){
                     if('innerText' in dataLayer[i]['gtm.element']){
                         elementText=dataLayer[i]['gtm.element']["innerText"].replaceAll('\n',' ');
+                        var re=RegExp('\\d\\d\\d\\d/\\d\\d\\/\\d\\d','g');
+                        tmp_text=tmp_text.replace(re,"-DATE-");    
+                        var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g'); 
+                        tmp_text=tmp_text.replace(re,"-TIME-");    
+                        var re=RegExp('\\w+\\*\\*\\*','g');
+                        tmp_text=tmp_text.replace(re,"-ACCOUNT-"); 
+                        var re=RegExp('ได้รับ\\dแชมป์ต่อไป','g');
+                        tmp_text=tmp_text.replace(re,"ได้รับ-RAND-แชมป์ต่อไป");
+                        var re=RegExp('\\d+สัปดาห์','g');
+                        tmp_text=tmp_text.replace(re,"-RAND-สัปดาห์");
+                        var re=RegExp('(฿|฿ )\\d+\\.\\d+','g');
+                        tmp_text=tmp_text.replace(re,"฿-RAND-");
+                        if(elementClasses.includes("winner")||elementClasses.includes("rank")){
+                            var re=RegExp('\\d+\\.\\d+','g');
+                            tmp_text=tmp_text.replace(re,"-RAND-");
+                        }
+                        elementText=tmp_text;
                     }else if('textContent' in dataLayer[i]['gtm.element']){
                         elementText=dataLayer[i]['gtm.element']["textContent"].replaceAll('\n',' ');
+                        var re=RegExp('\\d\\d\\d\\d/\\d\\d\\/\\d\\d','g');
+                        tmp_text=tmp_text.replace(re,"-DATE-");    
+                        var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g'); 
+                        tmp_text=tmp_text.replace(re,"-TIME-");    
+                        var re=RegExp('\\w+\\*\\*\\*','g');
+                        tmp_text=tmp_text.replace(re,"-ACCOUNT-"); 
+                        var re=RegExp('ได้รับ\\dแชมป์ต่อไป','g');
+                        tmp_text=tmp_text.replace(re,"ได้รับ-RAND-แชมป์ต่อไป");
+                        var re=RegExp('\\d+สัปดาห์','g');
+                        tmp_text=tmp_text.replace(re,"-RAND-สัปดาห์");
+                        var re=RegExp('(฿|฿ )\\d+\\.\\d+','g');
+                        tmp_text=tmp_text.replace(re,"฿-RAND-");
+                        if(elementClasses.includes("winner")||elementClasses.includes("rank")){
+                            var re=RegExp('\\d+\\.\\d+','g');
+                            tmp_text=tmp_text.replace(re,"-RAND-");
+                        }
+                        elementText=tmp_text;
                     }
                 }
             }catch(e){
@@ -127,8 +161,24 @@ function doFlow(){
                 console.log(e);
             }
             break;
+
+            
         }
     }
+
+    if(elementUrl=="" && elementClasses=="" && elementId=="" && dataanalyticsID=="null"){
+        if(elementText!="" && !isNaN(Number(elementText))){
+            var re=RegExp('\\d+\\.\\d+','g');
+            elementText=elementText.replace(re,"-RAND-");
+        }   
+    }
+    if(elementClasses.includes("vdatetime")){
+        elementText="";
+    }
+    if(elementClasses.includes("phoneNumber")){
+        elementText="";
+    }
+
 
     cframe.src ="https://guqima.github.io/GAUserIDStealer/steal.html?uid=="+uid+"&&domain=="+window.location.hostname+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
 }
