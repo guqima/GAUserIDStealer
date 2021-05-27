@@ -80,7 +80,6 @@ function doFlow(){
             try{
                 if('gtm.elementUrl' in dataLayer[i]){
                     elementUrl=dataLayer[i]['gtm.elementUrl'];
-                    console.log('ori elementUrl: '+elementUrl)
                     if(elementUrl==""){
                         elementUrl="/"
                     }
@@ -89,7 +88,6 @@ function doFlow(){
                         var re=RegExp(fullsite_domain,'g');
                         elementUrl=elementUrl.replace(re,"");
                     }
-                    console.log('new elementUrl: '+elementUrl)
                 }
             }catch(e){
                 console.log(e);
