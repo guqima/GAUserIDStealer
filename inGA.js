@@ -87,6 +87,16 @@ function doFlow(){
                         fullsite_domain='https://'+site_domain
                         var re=RegExp(fullsite_domain,'g');
                         elementUrl=elementUrl.replace(re,"");
+                        var re=RegExp('https://download.ocms365.com','g');
+                        elementUrl=elementUrl.replace(re,"");
+                        var re=RegExp('\\?pid.*','g');
+                        elementUrl=elementUrl.replace(re,"");
+                        var re=RegExp('\\?_ga.*','g');
+                        elementUrl=elementUrl.replace(re,"");
+                        var re=RegExp('\\?version.*','g');
+                        elementUrl=elementUrl.replace(re,"");
+                        var re=RegExp('javascript\\:','g');
+                        elementUrl=elementUrl.replace(re,"/");
                     }
                 }
             }catch(e){
@@ -128,8 +138,18 @@ function doFlow(){
                         tmp_text=tmp_text.replace(re,"-RAND-สัปดาห์");
                         var re=RegExp('(฿|฿ )\\d+\\.\\d+','g');
                         tmp_text=tmp_text.replace(re,"฿-RAND-");
+                        var re=RegExp('กระเป๋าสตางค์ \\d+\\.\\d+','g');
+                        tmp_text=tmp_text.replace(re,"กระเป๋าสตางค์-RAND-");
                         if(elementClasses.includes("winner")||elementClasses.includes("rank")){
                             var re=RegExp('\\d+\\.\\d+','g');
+                            tmp_text=tmp_text.replace(re,"-RAND-");
+                        }
+                        if(elementClasses=="price"){
+                            var re=RegExp('\\d+\\.\\d+','g');
+                            tmp_text=tmp_text.replace(re,"-RAND-");
+                        }
+                        if(elementClasses=="game-info" || elementClasses=="tabstab"){
+                            var re=RegExp('\\d+','g');
                             tmp_text=tmp_text.replace(re,"-RAND-");
                         }
                         elementText=tmp_text;
@@ -147,8 +167,18 @@ function doFlow(){
                         tmp_text=tmp_text.replace(re,"-RAND-สัปดาห์");
                         var re=RegExp('(฿|฿ )\\d+\\.\\d+','g');
                         tmp_text=tmp_text.replace(re,"฿-RAND-");
+                        var re=RegExp('กระเป๋าสตางค์ \\d+\\.\\d+','g');
+                        tmp_text=tmp_text.replace(re,"กระเป๋าสตางค์-RAND-");
                         if(elementClasses.includes("winner")||elementClasses.includes("rank")){
                             var re=RegExp('\\d+\\.\\d+','g');
+                            tmp_text=tmp_text.replace(re,"-RAND-");
+                        }
+                        if(elementClasses=="price"){
+                            var re=RegExp('\\d+\\.\\d+','g');
+                            tmp_text=tmp_text.replace(re,"-RAND-");
+                        }
+                        if(elementClasses=="game-info" || elementClasses=="tabstab"){
+                            var re=RegExp('\\d+','g');
                             tmp_text=tmp_text.replace(re,"-RAND-");
                         }
                         elementText=tmp_text;
