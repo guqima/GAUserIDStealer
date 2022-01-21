@@ -7,17 +7,6 @@
 
     <!-- Global site tag (gtag.js) - Google Ads: 10835804022 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10835804022"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-      
-        gtag('config', 'AW-10835804022');
-    </script>
-    <!-- Event snippet for Bonus99-Page view-ad event test conversion page -->
-    <script>
-      gtag('event', 'conversion', {'send_to': 'AW-10835804022/e_-9CMPHuJIDEPb-9K4o'});
-    </script>
     <!-- GTM script -->
     <script>
         function GetURLParameter(sParam) {
@@ -52,6 +41,15 @@
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;
                 f.parentNode.insertBefore(j,f);
          })(window,document,'script','dataLayer','GTM-TRK9NS7');
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'AW-10835804022');
+        
+        //pageView
+        gtag('event', 'conversion', {'send_to': 'AW-10835804022/e_-9CMPHuJIDEPb-9K4o'});
 
         //Event snippet for Sign-up_inside conversion page
         if (ad_url.indexOf("register=true")!=-1){
