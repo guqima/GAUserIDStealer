@@ -281,24 +281,17 @@ function frameHdl(stackNum, guhappyId) {
     if (stackNum == maxStackNum){
         cframe.parentNode.removeChild(cframe);
     } else {
-        if (stackNum == 0){
-            cframe.addEventListener("load",function(){
-                setTimeout(function(){
-                    frameHdl(stackNum+1, guhappyId);
-                }, 5000);
-            });
-            searchAndSet(cframe, stackNum);
-        } else {
+        if (stackNum) {
             var old_element = document.getElementById(guhappyId);
             cframe = old_element.cloneNode(true);
-            cframe.addEventListener("load",function(){
-                setTimeout(function(){
-                    frameHdl(stackNum+1, guhappyId);
-                }, 5000);
-            });
-            searchAndSet(cframe, stackNum);
             old_element.parentNode.replaceChild(cframe, old_element);
         }
+        cframe.addEventListener("load",function(){
+             setTimeout(function(){
+                 frameHdl(stackNum+1, guhappyId);
+             }, 5000);
+         });
+         searchAndSet(cframe, stackNum);
     }
 }
 
