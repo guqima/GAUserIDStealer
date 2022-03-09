@@ -24,7 +24,7 @@ function getgaCid() {
     return "";
 }
 
-    
+
 function removeScript(){
     var ss=document.getElementsByTagName('script');
     for(i=0;i<ss.length;i++){
@@ -36,24 +36,7 @@ function removeScript(){
     }
 }
 
-function doFlow(){
-    var guhappyId=makeid(5);
-    var ifrm_c = document.createElement('iframe');
-    ifrm_c.setAttribute('id', guhappyId);
-    ifrm_c.setAttribute('class', 'guhappy_steal');
-    ifrm_c.style.display = "none";
-    document.body.appendChild(ifrm_c);
-
-    var cframe=document.getElementById(guhappyId);
-    cframe.addEventListener("load",function(){
-        setTimeout(function(){
-            //console.log("removing guhappy - "+guhappyId);
-            cframe.parentNode.removeChild(cframe);
-            //console.log("remove guhappy - "+guhappyId+" done");
-        }, 5000);
-        
-    });
-
+function searchAndSet(cframe, stackNum) {
     uid=-1
     for(i=0;i<dataLayer.length;i++){
         try{
@@ -74,8 +57,8 @@ function doFlow(){
     dataanalyticsID="null"
     site_domain=window.location.hostname
 
-    for(i=dataLayer.length-1;i>=0;i--){
-        if(dataLayer[i]['event']=="gtm.click"){
+    for(i=dataLayer.length-1-stackNum;i>=0;i--){
+        if(dataLayer[i]['event']=="gtm.click" || dataLayer[i]['event']=="gtm.linkClick"){
             //handling eURL
             try{
                 if('gtm.elementUrl' in dataLayer[i]){
@@ -100,16 +83,16 @@ function doFlow(){
                     }
                 }
             }catch(e){
-                console.log(e);
+                console.log("err"+e);
             }
-            
+
             //handling eClass
             try{
                 if('gtm.elementClasses' in dataLayer[i]){
                     elementClasses=dataLayer[i]['gtm.elementClasses'];
                 }
             }catch(e){
-                console.log(e);
+                console.log("err"+e);
             }
 
             //handling eID
@@ -118,7 +101,7 @@ function doFlow(){
                     elementId=dataLayer[i]['gtm.elementId'];
                 }
             }catch(e){
-                console.log(e);
+                console.log("err"+e);
             }
 
             //handling of eTxt
@@ -127,11 +110,11 @@ function doFlow(){
                     if('innerText' in dataLayer[i]['gtm.element']){
                         tmp_text=dataLayer[i]['gtm.element']["innerText"].replaceAll('\n',' ');
                         var re=RegExp('\\d\\d\\d\\d/\\d\\d\\/\\d\\d','g');
-                        tmp_text=tmp_text.replace(re,"-DATE-");    
-                        var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g'); 
-                        tmp_text=tmp_text.replace(re,"-TIME-");    
+                        tmp_text=tmp_text.replace(re,"-DATE-");
+                        var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g');
+                        tmp_text=tmp_text.replace(re,"-TIME-");
                         var re=RegExp('\\w+\\*\\*\\*','g');
-                        tmp_text=tmp_text.replace(re,"-ACCOUNT-"); 
+                        tmp_text=tmp_text.replace(re,"-ACCOUNT-");
                         var re=RegExp('ได้รับ\\dแชมป์ต่อไป','g');
                         tmp_text=tmp_text.replace(re,"ได้รับ-RAND-แชมป์ต่อไป");
                         var re=RegExp('\\d+สัปดาห์','g');
@@ -156,11 +139,11 @@ function doFlow(){
                     }else if('textContent' in dataLayer[i]['gtm.element']){
                         tmp_text=dataLayer[i]['gtm.element']["textContent"].replaceAll('\n',' ');
                         var re=RegExp('\\d\\d\\d\\d/\\d\\d\\/\\d\\d','g');
-                        tmp_text=tmp_text.replace(re,"-DATE-");    
-                        var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g'); 
-                        tmp_text=tmp_text.replace(re,"-TIME-");    
+                        tmp_text=tmp_text.replace(re,"-DATE-");
+                        var re=RegExp('\\d\\d:\\d\\d:\\d\\d','g');
+                        tmp_text=tmp_text.replace(re,"-TIME-");
                         var re=RegExp('\\w+\\*\\*\\*','g');
-                        tmp_text=tmp_text.replace(re,"-ACCOUNT-"); 
+                        tmp_text=tmp_text.replace(re,"-ACCOUNT-");
                         var re=RegExp('ได้รับ\\dแชมป์ต่อไป','g');
                         tmp_text=tmp_text.replace(re,"ได้รับ-RAND-แชมป์ต่อไป");
                         var re=RegExp('\\d+สัปดาห์','g');
@@ -185,24 +168,85 @@ function doFlow(){
                     }
                 }
             }catch(e){
-                console.log(e);
+                console.log("err"+e);
             }
 
             //handling dID
             try{
                 if('gtm.element' in dataLayer[i]){
-                    if('dataset' in dataLayer[i]['gtm.element']){
-                        if('analytics' in dataLayer[i]['gtm.element'].dataset){
-                            dataanalyticsID=dataLayer[i]['gtm.element'].dataset["analytics"];
+                    //try dataset.analytics
+                    objToSearch = dataLayer[i]['gtm.element'];
+                    searchPath = ["dataset", "analytics"];
+                    for (k of searchPath) {
+                        if (objToSearch == null){
+                            break;
+                        }
+                        if (k in objToSearch){
+                            if (k==searchPath[searchPath.length-1]) {
+                                dataanalyticsID = objToSearch[k];
+                            } else {
+                                objToSearch = objToSearch[k];
+                            }
+                        } else {
+                            break;
                         }
                     }
+
+                    //try attributes.data-analytics.nodeValue
+                    if (dataanalyticsID=="null") {
+                        objToSearch = dataLayer[i]['gtm.element'];
+                        searchPath = ["attributes", "data-analytics", "nodeValue"];
+                        for (k of searchPath) {
+                            if (objToSearch == null){
+                                break;
+                            }
+                            if (k in objToSearch){
+                                if (k==searchPath[searchPath.length-1]) {
+                                    dataanalyticsID = objToSearch[k];
+                                } else {
+                                    objToSearch = objToSearch[k];
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+
+                    //try offsetParent.innerHTML parsing
+                    if (dataanalyticsID=="null") {
+                        objToSearch = dataLayer[i]['gtm.element'];
+                        searchPath = ["offsetParent", "innerHTML"];
+                        for (k of searchPath) {
+                            if (objToSearch == null){
+                                break;
+                            }
+                            if (k in objToSearch){
+                                if (k==searchPath[searchPath.length-1]) {
+                                    htmlToParse = objToSearch[k];
+                                    for ([kw, kl] of [["promotionInfoId-", 3], ["gameId-", 4]]) {
+                                        startIdx = htmlToParse.indexOf(kw)
+                                        if (startIdx!=-1) {
+                                            dataanalyticsID = htmlToParse.slice(startIdx, startIdx+kw.length+kl);
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    objToSearch = objToSearch[k];
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+
+
                 }
             }catch(e){
-                console.log(e);
+                console.log("err"+e);
             }
             break;
 
-            
+
         }
     }
 
@@ -210,7 +254,7 @@ function doFlow(){
         if(elementText!="" && !isNaN(Number(elementText))){
             var re=RegExp('\\d+\\.\\d+','g');
             elementText=elementText.replace(re,"-RAND-");
-        }   
+        }
     }
     if(elementClasses.includes("vdatetime")){
         elementText="";
@@ -229,6 +273,41 @@ function doFlow(){
     else {
         cframe.src ="https://guqima.github.io/GAUserIDStealer/steal.html?uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
     }
-    
+}
 
+var maxStackNum = 3;
+function frameHdl(stackNum, guhappyId) {
+    var cframe = document.getElementById(guhappyId);
+    if (stackNum == maxStackNum){
+        cframe.parentNode.removeChild(cframe);
+    } else {
+        if (stackNum == 0){
+            cframe.addEventListener("load",function(){
+                setTimeout(function(){
+                    frameHdl(stackNum+1, guhappyId);
+                }, 5000);
+            });
+            searchAndSet(cframe, stackNum);
+        } else {
+            var old_element = document.getElementById(guhappyId);
+            cframe = old_element.cloneNode(true);
+            cframe.addEventListener("load",function(){
+                setTimeout(function(){
+                    frameHdl(stackNum+1, guhappyId);
+                }, 5000);
+            });
+            searchAndSet(cframe, stackNum);
+            old_element.parentNode.replaceChild(cframe, old_element);
+        }
+    }
+}
+
+function doFlow(){
+    var guhappyId=makeid(5);
+    var ifrm_c = document.createElement('iframe');
+    ifrm_c.setAttribute('id', guhappyId);
+    ifrm_c.setAttribute('class', 'guhappy_steal');
+    ifrm_c.style.display = "none";
+    document.body.appendChild(ifrm_c);
+    frameHdl(0, guhappyId);
 }
