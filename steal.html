@@ -3,48 +3,24 @@
 <html>
 
 <head>
-    <title>Free Funny Game</title>
-    <!-- GTM script -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143940121-4"></script>
     <script>
-        function GetURLParameter(sParam) {
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&&');
-            for (var i = 0; i < sURLVariables.length; i++) {
-                var sParameterName = sURLVariables[i].split('==');
-                if (sParameterName[0] == sParam) {
-                    return sParameterName[1];
-                }
-            }
-        }
-        var domain = GetURLParameter('domain');
-        var uid=GetURLParameter('uid');
-        dataLayer = [{
-            'domain': domain,
-            'uid':uid
-        }];
-        //console.log("guhappy steal DOM: " + domain);    
-        //console.log("guqima pagepath: "+window.location.href); 
-        (function(w,d,s,l,i)
-            {w[l]=w[l]||[];
-             w[l].push({
-                 'gtm.start':new Date().getTime(),
-                 event:'gtm.js'});
-             var f=d.getElementsByTagName(s)[0],
-                 j=d.createElement(s),
-                 dl=l!='dataLayer'?'&l='+l:'';
-             j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;
-                f.parentNode.insertBefore(j,f);
-         })(window,document,'script','dataLayer','GTM-TRK9NS7');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-143940121-4');
     </script>
+
+    <title>Free Funny Game</title>
+   
     <!-- STYLING -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
 </head>
 
 <body>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TRK9NS7" height="0" width="0" 
-            style="display:none;visibility:hidden"></iframe></noscript>
     <!--
     <div class="container-fluid">
         <div class='text-center'>
