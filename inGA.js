@@ -216,9 +216,9 @@ function searchAndSet(stackNum) {
         elementText="";
     }
 
-    PagePath="dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
+    pagePath="dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
     ga('set', 'dimension5', site_domain);
-    ga('set', 'dimension9', PagePath);
+    ga('set', 'dimension9', pagePath);
 
 }
 
