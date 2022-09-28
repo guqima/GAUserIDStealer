@@ -74,7 +74,6 @@ function searchAndSet(stackNum) {
                         tmp_text=tmp_text.replace(re,"฿-RAND-");
                         var re=RegExp('กระเป๋าสตางค์ \\d+\\.\\d+','g');
                         tmp_text=tmp_text.replace(re,"กระเป๋าสตางค์-RAND-");
-                        tmp_text = tmp_text.replace(/%/g, '%25');
                         if(elementClasses.includes("winner")||elementClasses.includes("rank")){
                             var re=RegExp('\\d+\\.\\d+','g');
                             tmp_text=tmp_text.replace(re,"-RAND-");
@@ -104,7 +103,6 @@ function searchAndSet(stackNum) {
                         tmp_text=tmp_text.replace(re,"฿-RAND-");
                         var re=RegExp('กระเป๋าสตางค์ \\d+\\.\\d+','g');
                         tmp_text=tmp_text.replace(re,"กระเป๋าสตางค์-RAND-");
-                        tmp_text = tmp_text.replace(/%/g, '%25');
                         if(elementClasses.includes("winner")||elementClasses.includes("rank")){
                             var re=RegExp('\\d+\\.\\d+','g');
                             tmp_text=tmp_text.replace(re,"-RAND-");
