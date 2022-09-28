@@ -217,6 +217,7 @@ function searchAndSet(stackNum) {
     }
 
     pagePath="dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
+    console.log(pagePath);
     ga('set', 'dimension5', site_domain);
     ga('set', 'dimension9', pagePath);
 
