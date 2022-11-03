@@ -227,7 +227,7 @@ function searchAndSet(stackNum) {
 
 function doFlow(){
     searchAndSet(0).then(result=> {
-        toRemove = document.getElementById("a");
+        toRemove = document.getElementById("aidsGTM");
         while(toRemove!=undefined) {
             toRemove.remove();
             toRemove = document.getElementById("aidsGTM");
