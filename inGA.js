@@ -1,13 +1,13 @@
 function searchAndSet(stackNum) {
     return new Promise((resolve, reject) => {
 
-        elementUrl=""
-        elementClasses=""
-        elementId=""
-        elementText=""
-        tmp_text=""
-        dataanalyticsID="null"
-        site_domain=window.location.hostname
+        var elementUrl=""
+        var elementClasses=""
+        var elementId=""
+        var elementText=""
+        var tmp_text=""
+        var dataanalyticsID="null"
+        var site_domain=window.location.hostname
 
         for(i=dataLayer.length-1-stackNum;i>=0;i--){
             if(dataLayer[i]['event']=="gtm.click" || dataLayer[i]['event']=="gtm.linkClick"){
@@ -215,7 +215,7 @@ function searchAndSet(stackNum) {
             elementText="";
         }
 
-        pagePath="dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
+        var pagePath="dataanalyticsID="+dataanalyticsID+"&&element_url=="+elementUrl+"&&elementClasses="+elementClasses+"&&elementId="+elementId+"&&elementText="+elementText;
         //console.log(pagePath);
         gtag('event','click_item', {
             "dimension5":site_domain,
